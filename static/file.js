@@ -20,7 +20,6 @@ $(() => {
         if (!file) return alert('剪切板内无内容或不支持桌面文件');
         upload(new Array(file));
     });
-
     /* 点击上传 */
     $('.upload .content').on('click', function () {
         $('#file').click();
@@ -29,7 +28,6 @@ $(() => {
     $('#file').on('change', () => {
         upload($('#file')[0].files);
     });
-
     /* 拖拽上传 */
     $('#dragbox').on('dragover', e => {
         e.preventDefault();
@@ -48,24 +46,19 @@ $(() => {
         let files = e.originalEvent.dataTransfer.files;
         upload(files);
     });
-
     /* 上传函数 */
     function upload(files) {
         //if ($('#type').val().trim() === '') return alert('请输入');
         for (let i = 0; i < files.length; i++) {
-            
             var animateimg = files[i].name;
- 	        
  	        var imgarr=animateimg.split('\\');
  	        var myimg=imgarr[imgarr.length-1];
-
             var houzui = myimg.lastIndexOf('.');
  	        var ext = myimg.substring(houzui, myimg.length).toUpperCase();  
  	        var file = files[i];
  	        if(!file){return false;}
  	        var fileSize = file.size;
             var maxSize = 5242880;
-            
             if(ext !='.PNG' && ext !='.GIF' && ext !='.JPG' && ext !='.JPEG' && ext !='.BMP'){  
  		        parent.alert('文件类型错误,请上传图片类型');
  		        $('#file').val(null);return false;  
@@ -118,7 +111,6 @@ $(() => {
                     <input id="show" name="show" onclick="oCopy(this)" type="text" value="" readonly style="display:none">
                 </div>
             `);
-
             $.ajax({
                 url: api + $('#type').val(),
                 type: 'post',
@@ -163,8 +155,7 @@ $(() => {
                                     href: imgSrc,
                                     target: '_blank'
                                 });
-                                
-                            //代码链接
+                            //代码链接xkx
                             $('.' + randomClass)
                                 .find('#Imgs_url')
                                 .attr({
@@ -185,7 +176,7 @@ $(() => {
                                 .attr({
                                     value: '![]('+imgSrc+')'
                                 });
-                            //显示链接
+                            //显示链接xkx
                             $('.' + randomClass)
                                 .find('#show')
                                 .show();
@@ -194,10 +185,10 @@ $(() => {
                                 .attr({
                                     value: imgSrc
                                 });
-                            //复制所有
+                            //复制所有xkx
                             $('.copyall')
                                 .show();
-                            var tt = $('.filelist .title').html().replace('上传列表', '复制全部');
+                            var tt = $('.filelist .title').html().replace('上传列表', '');
                             $('.filelist .title').html(tt);
                         } else {
                             $('.' + randomClass)
@@ -222,10 +213,8 @@ $(() => {
                 }
             });
  	        }
- 	        
         }
     }
-
     /* 获取文件大小 */
     function formatBytes(bytes, decimals = 2) {
         if (bytes === 0) return '0 Bytes';
@@ -236,39 +225,42 @@ $(() => {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + sizes[i];
     }
 });
-    function copyAll(obj){
-		var copy = "";
-		for(var i=0;i<document.querySelectorAll('#Imgs'+obj.id).length;i++){; 
-			document.querySelectorAll('#Imgs'+obj.id)[i].parentElement.nextElementSibling.value = document.querySelectorAll('#Imgs'+obj.id)[i].value;
-			var copy = copy + document.querySelectorAll('#Imgs'+obj.id)[i].parentElement.nextElementSibling.value + '\n';
-		}
-		var txa = document.createElement('textarea');
-		txa.value = copy;
-        document.body.appendChild(txa);
-		txa.select();
-		var res = document.execCommand('copy');
-		document.body.removeChild(txa);
-		console.log('copy success');
-		console.log(copy);
-		if (browserRedirect()) {alert('设备类型为手机，有一定几率复制失败！请查看剪切板是否成功复制');}
+function sel(obj){
+	for(var i=0;i<document.querySelectorAll('#Imgs'+obj.id).length;i++){; 
+		document.querySelectorAll('#Imgs'+obj.id)[i].parentElement.nextElementSibling.value = document.querySelectorAll('#Imgs'+obj.id)[i].value;
 	}
-    function oCopy(obj){
- 	    obj.select();
- 	    document.execCommand("Copy");
- 	    console.log(obj.value);
- 	    if (browserRedirect()) {alert('设备类型为手机，有一定几率复制失败！请查看剪切板是否成功复制');}
-    }
-
-    function browserRedirect(){
-    	var sUserAgent = navigator.userAgent.toLowerCase();
-    	var bIsIpad = sUserAgent.match(/ipad/i) == 'ipad';
-    	var bIsIphone = sUserAgent.match(/iphone os/i) == 'iphone os';
-    	var bIsMidp = sUserAgent.match(/midp/i) == 'midp';
-    	var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == 'rv:1.2.3.4';
-    	var bIsUc = sUserAgent.match(/ucweb/i) == 'web';
-    	var bIsCE = sUserAgent.match(/windows ce/i) == 'windows ce';
-    	var bIsWM = sUserAgent.match(/windows mobile/i) == 'windows mobile';
-    	var bIsAndroid = sUserAgent.match(/android/i) == 'android';
-    	if(bIsIpad || bIsIphone || bIsMidp || bIsUc7 || bIsUc || bIsCE || bIsWM || bIsAndroid ){
- 		    return 1;}
-    }
+}
+function copyAll(obj){
+	var xkx = "";
+	for(var i=0;i<document.querySelectorAll('#show').length;i++){; 
+		var xkx = xkx + document.querySelectorAll('#show')[i].value + '\n';
+	}
+	var txa = document.createElement('textarea');
+	txa.value = xkx;
+    document.body.appendChild(txa);
+	txa.select();
+	var res = document.execCommand('copy');
+	document.body.removeChild(txa);
+	console.log('copy success');
+	console.log(xkx);
+	if (browserRedirect()) {alert('设备类型为手机，有一定几率复制失败！请查看剪切板是否成功复制');}
+}
+function oCopy(obj){
+	obj.select();
+	document.execCommand("Copy");
+	console.log(obj.value);
+	if (browserRedirect()) {alert('设备类型为手机，有一定几率复制失败！请查看剪切板是否成功复制');}
+}
+function browserRedirect(){
+    var sUserAgent = navigator.userAgent.toLowerCase();
+    var bIsIpad = sUserAgent.match(/ipad/i) == 'ipad';
+   	var bIsIphone = sUserAgent.match(/iphone os/i) == 'iphone os';
+   	var bIsMidp = sUserAgent.match(/midp/i) == 'midp';
+   	var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == 'rv:1.2.3.4';
+   	var bIsUc = sUserAgent.match(/ucweb/i) == 'web';
+   	var bIsCE = sUserAgent.match(/windows ce/i) == 'windows ce';
+   	var bIsWM = sUserAgent.match(/windows mobile/i) == 'windows mobile';
+   	var bIsAndroid = sUserAgent.match(/android/i) == 'android';
+   	if(bIsIpad || bIsIphone || bIsMidp || bIsUc7 || bIsUc || bIsCE || bIsWM || bIsAndroid ){
+ 	    return 1;}
+}
